@@ -26,12 +26,13 @@ public class EnemyBrain : MonoBehaviour
     bool canMove = true;
 
     public EnemyStates state = EnemyStates.PATROL;
+    [SerializeField] Light sightDisplayLight;
 
     [Header("State Timers")]
     [SerializeField] float pursueTime;
-    [SerializeField] float pursueTimer = 0;
+    float pursueTimer = 0;
     [SerializeField] float investigateTime;
-    [SerializeField] float investigateTimer = 0;
+    float investigateTimer = 0;
 
     [Header("Target Positions")]
     [SerializeField] Transform[] waypoints;
@@ -51,6 +52,7 @@ public class EnemyBrain : MonoBehaviour
         speed = moveSpeed;
         heightLevel = transform.position.y;
         totalWaypoints = waypoints.Length;
+        sightDisplayLight.color = Color.green;
     }
 
     private void Update()
@@ -92,6 +94,7 @@ public class EnemyBrain : MonoBehaviour
 
     public void StartPatrol()
     {
+        sightDisplayLight.color = Color.green;
         speed = moveSpeed;
         state = EnemyStates.PATROL;
     }
@@ -106,6 +109,7 @@ public class EnemyBrain : MonoBehaviour
 
     public void StartInvestigation(Vector3 detectedPosition)
     {
+        sightDisplayLight.color = Color.yellow;
         investigateTimer = 0;
         canMove = true;
         heardPoint = detectedPosition;
@@ -121,6 +125,7 @@ public class EnemyBrain : MonoBehaviour
 
     public void StartPursue()
     {
+        sightDisplayLight.color = Color.red;
         pursueTimer = 0;
         canMove = true;
         speed = chaseSpeed;

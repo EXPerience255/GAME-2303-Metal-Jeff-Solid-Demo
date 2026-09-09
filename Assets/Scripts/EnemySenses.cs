@@ -9,6 +9,7 @@ public class EnemySenses : MonoBehaviour
     [SerializeField] Transform target;
     [SerializeField] LayerMask targetLayer;
     [SerializeField] float range;
+    [SerializeField] float dotRange;
 
     private void Awake()
     {
@@ -29,7 +30,7 @@ public class EnemySenses : MonoBehaviour
             if (hit.transform.gameObject.GetComponent<PlayerController>())
             {
                 seen = true;
-                if (dot > 0.8f) brain.StartPursue();
+                if (dot > dotRange) brain.StartPursue();
             }
             else seen = false;
         }
@@ -63,7 +64,7 @@ public class EnemySenses : MonoBehaviour
         Gizmos.DrawLine(transform.position, target.position);
 
         Gizmos.color = Color.red;
-        if (dot > 0.8f && seen) Gizmos.color = Color.green;
+        if (dot > dotRange && seen) Gizmos.color = Color.green;
         Vector3 endPoint = transform.position + transform.forward * 10;
         Gizmos.DrawLine(transform.position, endPoint);
     }
