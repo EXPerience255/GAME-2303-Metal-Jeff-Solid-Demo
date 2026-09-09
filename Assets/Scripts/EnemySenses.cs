@@ -1,13 +1,19 @@
 using UnityEngine;
 
-public class Sight : MonoBehaviour
+public class EnemySenses : MonoBehaviour
 {
+    EnemyBrain brain;
     float dot;
     bool seen;
 
     [SerializeField] Transform target;
     [SerializeField] LayerMask targetLayer;
     [SerializeField] float range;
+
+    private void Awake()
+    {
+        brain = GetComponent<EnemyBrain>();
+    }
 
     private void Update()
     {
@@ -20,12 +26,34 @@ public class Sight : MonoBehaviour
 
         if (Physics.Raycast(transform.position, toTarget, out hit, range, targetLayer))
         {
-            if (hit.transform.gameObject.GetComponent<PlayerController>()) seen = true;
+            if (hit.transform.gameObject.GetComponent<PlayerController>())
+            {
+                seen = true;
+                if (dot > 0.8f) brain.StartPursue();
+            }
             else seen = false;
         }
         else
         {
             seen = false;
+        }
+    }
+
+    public void OnHeard(GameObject player, float soundRange)
+    {
+        if (brain.state == EnemyStates.PURSUE) return;
+
+        Vector3 forwardDir = transform.forward;
+        Vector3 toTarget = (target.position - transform.position).normalized;
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, toTarget, out hit, soundRange, targetLayer))
+        {
+            if (hit.transform.gameObject.GetComponent<PlayerController>())
+            {
+                brain.StartInvestigation(player.transform.position);
+            }
         }
     }
 
