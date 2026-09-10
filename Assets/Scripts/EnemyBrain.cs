@@ -102,9 +102,8 @@ public class EnemyBrain : MonoBehaviour
     // canMove is set to true here instead of StartPatrol() because putting canMove = true in StartPatrol() would, for some reason, prevent proper transition from INVESTIGATE to PATROL.
     private void UpdatePatrol()
     {
-        Debug.Log(waypoints[currentWaypoint]);
         canMove = true;
-        GetPathingFromAgent(waypoints[currentWaypoint].position, 0.2f); Debug.Log("Patrolling!");
+        GetPathingFromAgent(waypoints[currentWaypoint].position, 0.2f);
     }
 
     public void StartInvestigation(Vector3 detectedPosition)
@@ -143,26 +142,22 @@ public class EnemyBrain : MonoBehaviour
     // This is a separate function to significantly reduce the length of this code.
     private void GetPathingFromAgent(Vector3 specificTarget, float switchWaypointBuffer = 0, bool stopAtEnd = false)
     {
-        if (state == EnemyStates.PATROL) Debug.Log("Patrol S1");
         if (timeSinceLastDestination < 1)
         {
             remainingPoints.Clear();
             agent.enabled = true;
-            if (state == EnemyStates.PATROL) Debug.Log("Patrol S2");
 
             agent.CalculatePath(specificTarget, currentPath);
             foreach (Vector3 p in currentPath.corners)
             {
                 remainingPoints.Enqueue(p);
             }
-            if (state == EnemyStates.PATROL) Debug.Log("Patrol S3");
 
             remainingPoints.Dequeue();
             currentPoint = remainingPoints.Dequeue();
 
             agent.enabled = false;
             timeSinceLastDestination = 0;
-            if (state == EnemyStates.PATROL) Debug.Log("Patrol S4");
 
             if (Vector3.Distance(transform.position, specificTarget) < switchWaypointBuffer)
             {
@@ -173,14 +168,12 @@ public class EnemyBrain : MonoBehaviour
                     if (currentWaypoint >= totalWaypoints) currentWaypoint = 0;
                 }
             }
-            if (state == EnemyStates.PATROL) Debug.Log("Patrol S5");
         }
 
         if (Vector3.Distance(transform.position, currentPoint) < 0.2f)
         {
             currentPoint = remainingPoints.Dequeue();
         }
-        if (state == EnemyStates.PATROL) Debug.Log("Patrol S6");
 
         timeSinceLastDestination += Time.deltaTime;
     }

@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
         cc = GetComponent<CharacterController>();
         speed = moveSpeed;
     }
+
     private void OnEnable()
     {
         inputs.Enable();
@@ -32,7 +33,11 @@ public class PlayerController : MonoBehaviour
     {
         moveInput = inputs.Basic.Movement.ReadValue<Vector2>();
         if (moveInput != new Vector2(0, 0)) moving = true; else moving = false;
-        Vector3 moveDir = new Vector3(moveInput.x, 0, moveInput.y).normalized;
+        Vector3 moveDir = new Vector3(
+            moveInput.x * Mathf.Cos(Mathf.PI / 4) - moveInput.y * Mathf.Cos(Mathf.PI / 4),
+            0,
+            moveInput.x * Mathf.Cos(Mathf.PI / 4) + moveInput.y * Mathf.Cos(Mathf.PI / 4)
+        ).normalized;
         cc.Move(moveDir * speed * Time.deltaTime);
 
         sneaking = inputs.Basic.Sneak.IsPressed();
