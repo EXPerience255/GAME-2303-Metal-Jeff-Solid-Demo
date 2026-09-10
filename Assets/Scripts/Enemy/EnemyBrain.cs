@@ -23,8 +23,8 @@ public class EnemyBrain : MonoBehaviour
     float heightLevel;
     int currentWaypoint = 0;
     int totalWaypoints;
-    bool canMove = true;
 
+    public bool canMove = true;
     public EnemyStates state = EnemyStates.PATROL;
     [SerializeField] Light sightDisplayLight;
 
