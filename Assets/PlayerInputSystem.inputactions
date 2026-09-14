@@ -25,6 +25,16 @@
                     "interactions": "",
                     "initialStateCheck": false,
                     "priority": 0
+                },
+                {
+                    "name": "End",
+                    "type": "Button",
+                    "id": "060d0f78-adfa-4211-8d11-fce9bc6f7555",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false,
+                    "priority": 0
                 }
             ],
             "bindings": [
@@ -146,6 +156,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Sneak",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0203bd9e-fb40-4107-8722-76ef7735112e",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "End",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

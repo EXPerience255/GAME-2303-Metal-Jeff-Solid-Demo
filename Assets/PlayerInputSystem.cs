@@ -111,6 +111,16 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""initialStateCheck"": false,
                     ""priority"": 0
+                },
+                {
+                    ""name"": ""End"",
+                    ""type"": ""Button"",
+                    ""id"": ""060d0f78-adfa-4211-8d11-fce9bc6f7555"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false,
+                    ""priority"": 0
                 }
             ],
             ""bindings"": [
@@ -234,6 +244,17 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""action"": ""Sneak"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0203bd9e-fb40-4107-8722-76ef7735112e"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""End"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -244,6 +265,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Basic = asset.FindActionMap("Basic", throwIfNotFound: true);
         m_Basic_Movement = m_Basic.FindAction("Movement", throwIfNotFound: true);
         m_Basic_Sneak = m_Basic.FindAction("Sneak", throwIfNotFound: true);
+        m_Basic_End = m_Basic.FindAction("End", throwIfNotFound: true);
     }
 
     ~@PlayerInputSystem()
@@ -326,6 +348,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private List<IBasicActions> m_BasicActionsCallbackInterfaces = new List<IBasicActions>();
     private readonly InputAction m_Basic_Movement;
     private readonly InputAction m_Basic_Sneak;
+    private readonly InputAction m_Basic_End;
     /// <summary>
     /// Provides access to input actions defined in input action map "Basic".
     /// </summary>
@@ -345,6 +368,10 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Basic/Sneak".
         /// </summary>
         public InputAction @Sneak => m_Wrapper.m_Basic_Sneak;
+        /// <summary>
+        /// Provides access to the underlying input action "Basic/End".
+        /// </summary>
+        public InputAction @End => m_Wrapper.m_Basic_End;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -377,6 +404,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Sneak.started += instance.OnSneak;
             @Sneak.performed += instance.OnSneak;
             @Sneak.canceled += instance.OnSneak;
+            @End.started += instance.OnEnd;
+            @End.performed += instance.OnEnd;
+            @End.canceled += instance.OnEnd;
         }
 
         /// <summary>
@@ -394,6 +424,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Sneak.started -= instance.OnSneak;
             @Sneak.performed -= instance.OnSneak;
             @Sneak.canceled -= instance.OnSneak;
+            @End.started -= instance.OnEnd;
+            @End.performed -= instance.OnEnd;
+            @End.canceled -= instance.OnEnd;
         }
 
         /// <summary>
@@ -448,5 +481,12 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSneak(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "End" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnEnd(InputAction.CallbackContext context);
     }
 }
