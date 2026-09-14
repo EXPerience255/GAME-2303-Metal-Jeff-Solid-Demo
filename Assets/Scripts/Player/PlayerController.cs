@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private float speed;
 
+    public bool debug;
     public bool moving;
     public bool sneaking;
     public float moveSpeed;
@@ -44,18 +45,20 @@ public class PlayerController : MonoBehaviour
         cc.Move(moveDir * speed * Time.deltaTime);
 
         sneaking = inputs.Basic.Sneak.IsPressed();
-        if (sneaking) speed = sneakSpeed; else speed = moveSpeed;
+        if (sneaking) speed = sneakSpeed; else if (debug) speed = moveSpeed * 3; else speed = moveSpeed;
     }
 
     private void Update()
     {
         if (inputs.Basic.End.IsPressed()) Application.Quit();
+
+        if (transform.position.y != 1) transform.position = new Vector3(transform.position.x, 1, transform.position.z);
     }
 
     private void OnCollisionEnter(Collision col)
     {
         // not sure why LayerMask.GetMask("Enemy") didn't work, but hard-coding is always an option
-        if (col.gameObject.layer == 6)
+        if (col.gameObject.layer == 6 && !debug)
         {
             SceneManager.LoadScene(scene.name);
         }

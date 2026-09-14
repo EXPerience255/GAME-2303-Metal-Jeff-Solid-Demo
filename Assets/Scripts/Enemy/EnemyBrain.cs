@@ -103,7 +103,7 @@ public class EnemyBrain : MonoBehaviour
     private void UpdatePatrol()
     {
         canMove = true;
-        GetPathingFromAgent(waypoints[currentWaypoint].position, 0.2f);
+        GetPathingFromAgent(waypoints[currentWaypoint].position, 0.333f);
     }
 
     public void StartInvestigation(Vector3 detectedPosition)

@@ -27,10 +27,11 @@ public class EnemySenses : MonoBehaviour
 
         if (Physics.Raycast(transform.position, toTarget, out hit, range, targetLayer))
         {
-            if (hit.transform.gameObject.GetComponent<PlayerController>())
+            PlayerController jeff = hit.transform.gameObject.GetComponent<PlayerController>();
+            if (jeff)
             {
                 seen = true;
-                if (dot > dotRange) brain.StartPursue();
+                if (dot > dotRange && !jeff.debug) brain.StartPursue();
             }
             else seen = false;
         }

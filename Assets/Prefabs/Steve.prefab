@@ -431,7 +431,7 @@ MonoBehaviour:
   target: {fileID: 0}
   targetLayer:
     serializedVersion: 2
-    m_Bits: 384
+    m_Bits: 1408
   range: 10
   dotRange: 0
 --- !u!1 &8074365021520101706
